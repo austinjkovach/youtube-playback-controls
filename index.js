@@ -40,7 +40,10 @@ document.addEventListener('keydown', function(e) {
     decreaseSpeed()
   } else if(e.keyCode === 48) {
     previous30()
+  } else if(e.keyCode === 72) {
+    window.location = "/"
   }
+
 })
 
 function increaseSpeed() {
