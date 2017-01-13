@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+  "name": "Youtube Playback Speed",
+  "version": "1.0",
+  "description": "Youtube playback speed controls",
+  "content_scripts": [{
+    "matches": ["*://*.youtube.com/*"],
+    "js": ["index.js"],
+    "css": ["index.css"]
+  }]
+}
