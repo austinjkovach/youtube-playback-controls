@@ -1,46 +1,93 @@
-var video = document.querySelector('video')
-var player = document.querySelector('#player-api')
 
-var control = document.createElement('div')
-var display = document.createElement('div')
-var upButton = document.createElement('button')
-var downButton = document.createElement('button')
-var backButton = document.createElement('button')
+var video;
+var player;
 
-control.classList.add('extension-controls')
+var control;
+var display;
+var upButton;
+var downButton;
+var backButton;
 
-display.textContent = video.playbackRate
-display.classList.add('extension-display')
+var lastLocation = window.location.href
+var checkVideoLoop = setInterval(checkForVideo, 1000)
+var checkHref = setInterval(checkHrefChange, 1000)
 
-upButton.textContent = "+"
-upButton.classList.add('extension-button')
-upButton.setAttribute('id', 'up-button')
+// check if href has changed every 1 second
+function checkHrefChange() {
+  if(lastLocation === window.location.href) return;
+  lastLocation = window.location.href
+  checkVideoLoop = setInterval(checkForVideo, 1000)
+}
 
-downButton.textContent = "-"
-downButton.classList.add('extension-button')
-downButton.setAttribute('id', 'down-button')
+// set video
+// if video is null, wait 1 second
+// set video
+function checkForVideo() {
+  video = document.querySelector('video')
+  if(!video) {
+    console.log('video =', video)
+  } else {
+    console.log('clearing interval')
+    console.log('cleared video =', video)
 
-backButton.textContent = "<<"
-backButton.classList.add('extension-button')
-backButton.setAttribute('id', 'back-button')
+    clearInterval(checkVideoLoop)
+    buildControls()
+  }
+}
 
-upButton.addEventListener('click', increaseSpeed)
-downButton.addEventListener('click', decreaseSpeed)
+function buildControls() {
 
-backButton.addEventListener('click', previous30)
+  player = document.querySelector('#player-api')
+
+  control = document.createElement('div')
+  display = document.createElement('div')
+  upButton = document.createElement('button')
+  downButton = document.createElement('button')
+  backButton = document.createElement('button')
+
+  control.classList.add('extension-controls')
+
+  display.textContent = video.playbackRate
+  display.classList.add('extension-display')
+
+  upButton.textContent = "+"
+  upButton.classList.add('extension-button')
+  upButton.setAttribute('id', 'up-button')
+
+  downButton.textContent = "-"
+  downButton.classList.add('extension-button')
+  downButton.setAttribute('id', 'down-button')
+
+  backButton.textContent = "<<"
+  backButton.classList.add('extension-button')
+  backButton.setAttribute('id', 'back-button')
+
+  upButton.addEventListener('click', increaseSpeed)
+  downButton.addEventListener('click', decreaseSpeed)
+
+  backButton.addEventListener('click', previous30)
+
+
+  control.appendChild(backButton)
+  control.appendChild(downButton)
+  control.appendChild(display)
+  control.appendChild(upButton)
+
+  player.appendChild(control)
+}
 
 document.addEventListener('keydown', function(e) {
   if(!e.ctrlKey) {
     return
   }
 
-  if(e.keyCode === 187) {
+  if(e.keyCode === 187) {         // 'ctrl' + '='
     increaseSpeed()
-  } else if(e.keyCode === 189) {
+  } else if(e.keyCode === 189) {  // 'ctrl' + '-'
     decreaseSpeed()
-  } else if(e.keyCode === 48) {
+  } else if(e.keyCode === 48) {   // 'ctrl' + '0'
     previous30()
-  } else if(e.keyCode === 72) {
+  } else if(e.keyCode === 72) {   // 'ctrl' + 'h'
     window.location = "/"
   }
 
@@ -68,19 +115,12 @@ function updateDisplay() {
   return false
 }
 
-control.appendChild(backButton)
-control.appendChild(downButton)
-control.appendChild(display)
-control.appendChild(upButton)
 
-player.appendChild(control)
-
-// #EAE1DF
-
-// #B79492
-
-// #917C78
-
-// #545E56
-
-// #667761
+/*
+  Color Palette
+   #EAE1DF
+   #B79492
+   #917C78
+   #545E56
+   #667761
+*/
