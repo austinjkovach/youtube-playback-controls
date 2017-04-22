@@ -25,10 +25,8 @@ function checkHrefChange() {
 function checkForVideo() {
   video = document.querySelector('video')
   if(!video) {
-    console.log('video =', video)
+    return
   } else {
-    console.log('clearing interval')
-    console.log('cleared video =', video)
 
     clearInterval(checkVideoLoop)
     buildControls()
