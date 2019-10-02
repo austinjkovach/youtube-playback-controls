@@ -23,9 +23,9 @@ function checkHrefChange() {
 // if video is null, wait 1 second
 // set video
 function checkForVideo() {
-  video = document.querySelector('video')
   if(!video) {
-    return
+  video = document.querySelector('video')
+  return
   } else {
 
     clearInterval(checkVideoLoop)
@@ -35,8 +35,8 @@ function checkForVideo() {
 
 function buildControls() {
 
-  player = document.querySelector('#player-api')
-
+  player = document.querySelector('#player-container')
+  
   control = document.createElement('div')
   display = document.createElement('div')
   upButton = document.createElement('button')
@@ -63,7 +63,7 @@ function buildControls() {
   upButton.addEventListener('click', increaseSpeed)
   downButton.addEventListener('click', decreaseSpeed)
 
-  backButton.addEventListener('click', previous30)
+  backButton.addEventListener('click', () => jumpBack(5))
 
 
   control.appendChild(backButton)
@@ -74,37 +74,46 @@ function buildControls() {
   player.appendChild(control)
 }
 
-document.addEventListener('keydown', function(e) {
-  if(!e.ctrlKey) {
+document.addEventListener('keydown', e => {
+  if(!e.altKey) {
     return
   }
-
-  if(e.keyCode === 187) {         // 'ctrl' + '='
-    increaseSpeed()
-  } else if(e.keyCode === 189) {  // 'ctrl' + '-'
-    decreaseSpeed()
-  } else if(e.keyCode === 48) {   // 'ctrl' + '0'
-    previous30()
-  } else if(e.keyCode === 72) {   // 'ctrl' + 'h'
-    window.location = "/"
-  }
-
+  
+    if(e.key === '=') {         // 'alt' + '='
+      increaseSpeed()
+    } else if(e.key === '-') {  // 'alt' + '-'
+      decreaseSpeed()
+    } else if(e.key === '0') {   // 'alt' + '0'
+      jumpBack(5)
+    } else if(e.key === 'h') {   // 'alt' + 'h'
+      window.location = "/"
+    }
 })
 
 function increaseSpeed() {
-  video.playbackRate += 0.5
+  if(video.playbackRate < 1) {
+    video.playbackRate += 0.25
+  } else {
+    video.playbackRate += 0.5
+  }
+
   updateDisplay()
   return false;
 }
 
 function decreaseSpeed() {
-  video.playbackRate -= 0.5
+  if(video.playbackRate <= 1) {
+    video.playbackRate -= 0.25
+  } else {
+    video.playbackRate -= 0.5
+  }
+
   updateDisplay()
   return false;
 }
 
-function previous30() {
-  video.currentTime -= 30
+function jumpBack(duration) {
+  video.currentTime -= duration
   return false;
 }
 
@@ -112,7 +121,6 @@ function updateDisplay() {
   display.textContent = video.playbackRate
   return false
 }
-
 
 /*
   Color Palette

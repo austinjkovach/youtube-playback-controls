@@ -1,18 +1,20 @@
 .extension-controls {
+  position: absolute;
+  display: flex;
+  left: 0px;
+  top: 0px;
   width: 120px;
   height: 25px;
-  position: absolute;
-  right: 0px;
-  top: 0px;
 }
 
 .extension-button {
-  color: #EAE1DF;
+  display: inline-block;
+  z-index: 16;
   height: 25px;
   width: 30px;
-  display: inline-block;
+  border: 0;
+  color: #EAE1DF;
   cursor: pointer;
-  z-index: 16;
 }
 
 .extension-display {
